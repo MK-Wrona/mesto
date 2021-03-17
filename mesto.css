@@ -301,6 +301,16 @@
     box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.2);
     padding: 37px 36px 34px;
     position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@media screen and (max-width: 520px) {
+    .pop-up__window {
+        max-width: 282px;
+        padding: 25px 22px 25px;
+    }
 }
 
 .pop-up__title {
@@ -311,6 +321,17 @@
     line-height: 29px;
     margin-bottom: 54px;
     margin-top: 0;
+}
+
+@media screen and (max-width: 520px) {
+    .pop-up__title {
+        font-family: Inter;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 900;
+        line-height: 22px;
+        margin-bottom: 75px;
+    }
 }
 
 .pop-up__form {
@@ -337,6 +358,16 @@
 .pop-up__button:hover {
     opacity: 0.7;
     cursor: pointer;
+}
+
+@media screen and (max-width: 520px) {
+    .pop-up__button {
+        max-width: 238px;
+        font-family: Inter;
+        font-size: 14px;
+        line-height: 17px;
+        height: 46px;
+    }
 }
 
 ::-webkit-input-placeholder {
@@ -380,6 +411,16 @@
     right: -40px;
     background-color: rgba(0, 0, 0, 0);
     cursor: pointer;
+}
+
+@media screen and (max-width: 520px) {
+    .pop-up__close {
+        width: 26px;
+        height: 26px;
+        top: -26px;
+        right: -26px;
+        background-size: contain;
+    }
 }
 
 .pop-up__close:hover {
