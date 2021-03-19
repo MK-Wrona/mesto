@@ -88,7 +88,7 @@
     }
 }
 
-.profile__subname {
+.profile__prof {
     font-family: Inter;
     font-size: 18px;
     font-style: normal;
@@ -98,7 +98,7 @@
 }
 
 @media screen and (max-width: 900px) {
-    .profile__subname {
+    .profile__prof {
         text-align: center;
     }
 }
@@ -290,6 +290,7 @@
     left: 0;
     justify-content: center;
     align-items: center;
+    display: none;
 }
 
 .pop-up__window {
@@ -341,7 +342,7 @@
     padding: 0;
 }
 
-.pop-up__button {
+.pop-up__submit-button {
     width: 358px;
     background-color: #000;
     color: white;
@@ -361,7 +362,7 @@
 }
 
 @media screen and (max-width: 520px) {
-    .pop-up__button {
+    .pop-up__submit-button {
         max-width: 238px;
         font-family: Inter;
         font-size: 14px;
@@ -373,6 +374,14 @@
 ::-webkit-input-placeholder {
     /* Chrome */
     color: black;
+}
+
+:focus::-webkit-input-placeholder {
+    color: transparent;
+}
+
+:focus::-moz-placeholder {
+    color: transparent;
 }
 
 .pop-up__profession {
@@ -399,7 +408,7 @@
     padding-bottom: 13px;
 }
 
-.pop-up__close {
+.pop-up__close-button {
     width: 40px;
     height: 40px;
     border: none;
@@ -414,7 +423,7 @@
 }
 
 @media screen and (max-width: 520px) {
-    .pop-up__close {
+    .pop-up__close-button {
         width: 26px;
         height: 26px;
         top: -26px;
@@ -425,4 +434,8 @@
 
 .pop-up__close:hover {
     opacity: 0.7;
+}
+
+.pop-up_opened {
+    display: flex;
 }
