@@ -1,0 +1,12 @@
+::-webkit-input-placeholder {
+    /* Chrome */
+    color: black;
+}
+
+:focus::-webkit-input-placeholder {
+    color: transparent;
+}
+
+:focus::-moz-placeholder {
+    color: transparent;
+}
