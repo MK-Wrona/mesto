@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<!-- -->
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Местечко</title>
+    <link rel="icon" href="<%=require('./images/observer.png')%>" />
+</head>
+
+<body class="mesto">
+    <div class="page">
+        <header class="header">
+            <img src="<%=require('./images/mesto-logo.svg')%>" class="header__logo" alt="Лого Место" />
+        </header>
+        <main class="main">
+            <section class="profile">
+                <div class="profile__info">
+                    <div class="profile__icon-container">
+                        <img src="<%=require('./images/observer.png')%>" class="profile__icon" alt="Фото Профиля" />
+                        <img src="<%=require('./images/pen-edit-image.svg')%>" class="profile__icon-edit" alt="Иконка карандаша">
+                    </div>
+                    <div class="profile__wrap-text">
+                        <div class="profile__wrap">
+                            <h1 class="profile__name">Nobara</h1>
+                            <button type="button" class="profile__edit-button"></button>
+                        </div>
+                        <p class="profile__prof">Tokio Station Observer</p>
+                    </div>
+                </div>
+                <button type="button" class="profile__add-button"></button>
+            </section>
+
+            <section class="grid">
+
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p class="footer__copyright">&copy;2021 Mesto Russia</p>
+        </footer>
+    </div>
+
+    <div class="pop-up pop-up_edit" id="pop-up">
+        <div class="pop-up__window">
+            <h2 class="pop-up__title">Редактировать профиль</h2>
+            <form class="pop-up__form" name="edit-profile-info" novalidate>
+                <div class="pop-up__input-box">
+                    <label class="pop-up__form-label" for="input-name"></label>
+                    <input placeholder="Nobara" type="text" id="input-name" class="pop-up__input pop-up__input_name_name" name="name" required minlength="2" maxlength="40" autocomplete="off">
+                    <span class="pop-up__form-error" id="input-name-error"></span>
+                </div>
+                <div class="pop-up__input-box">
+                    <label class="pop-up__form-label" for="input-prof"></label>
+                    <input placeholder="Tokio Station Observer" id="input-prof" type="text" class="pop-up__input pop-up__input_name_prof" name="prof" required minlength="2" maxlength="40" autocomplete="off">
+                    <span class="pop-up__form-error" id="input-prof-error"></span>
+                </div>
+                <button class="pop-up__submit-button" type="submit" value="Сохранить">Сохранить</button>
+            </form>
+            <button class="pop-up__close-button" type="button"></button>
+        </div>
+    </div>
+
+    <div class="pop-up pop-up_add">
+        <div class="pop-up__window">
+            <h2 class="pop-up__title">Новое место</h2>
+            <form class="pop-up__form pop-up__add-form" name="add-card-profile-info" novalidate>
+                <div class="pop-up__input-box">
+                    <label class="pop-up__form-label" for="input-title"></label>
+                    <input placeholder="Название" type="text" id="input-title" class="pop-up__input pop-up__input_name_title" name="title" required minlength="1" maxlength="30">
+                    <span class="pop-up__form-error" id="input-title-error"></span>
+                </div>
+
+                <div class="pop-up__input-box">
+                    <label class="pop-up__form-label" for="input-link"></label>
+                    <input placeholder="Ссылка на картинку" type="url" id="input-link" class="pop-up__input pop-up__input_name_link" name="link" required>
+                    <span class="pop-up__form-error" id="input-link-error"></span>
+                </div>
+                <button class="pop-up__submit-button" type="submit" value="Создать">Сохранить</button>
+            </form>
+            <button class="pop-up__close-button" type="button"></button>
+        </div>
+    </div>
+
+    <div class="pop-up pop-up_full">
+        <div class="pop-up__box">
+            <img src="." alt="Полноэкранное изображение" class="pop-up__full-image" />
+            <h3 class="pop-up__title-full-image"></h3>
+            <button type="button" class="pop-up__close-button"></button>
+        </div>
+    </div>
+    <div class="pop-up pop-up_confirm">
+        <div class="pop-up__window">
+            <h3 class="pop-up__title-confirm">Вы уверены?</h3>
+            <button class="pop-up__submit-button" type="submit" value="Создать">Да</button>
+            <button type="button" class="pop-up__close-button"></button>
+        </div>
+    </div>
+    </div>
+    <div class="pop-up pop-up_avatar">
+        <div class="pop-up__window">
+            <h3 class="pop-up__title">Обновить аватар</h3>
+            <form class="pop-up__form pop-up__avatar-form" name="change-avatar" novalidate>
+                <label class="pop-up__form-label" for="input-link"></label>
+                <input placeholder="Ссылка на картинку" type="url" id="input-link" class="pop-up__input pop-up__input-avatar" name="link" required>
+                <span class="pop-up__form-error" id="input-link-error"></span>
+                <button class="pop-up__submit-button" type="submit" value="Создать">Сохранить</button>
+            </form>
+            <button type="button" class="pop-up__close-button"></button>
+
+
+        </div>
+    </div>
+    <template class="grid-template">
+      <div class="grid__wrap">
+          <img src="./images/karach_grid.png" class="grid__pic" alt="" />
+          <img src="<%=require('./images/trash-bin.svg')%>"  class="grid__delete" />
+          <div class="grid__description-container">
+              <h2 class="grid__description">Карачаево</h2>
+              <div class="grid__like-box">
+              <button class="grid__like-button" type="button"></button>
+              <p class="grid__like-counter">0</p>
+            </div>
+          </div>
+      </div>
+  </template>
+</body>
+
+</html>
