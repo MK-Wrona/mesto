@@ -48,7 +48,8 @@ import {
     avatarPopupForm,
     avatarPopupCloseBtn,
     avatarSubmitButton,
-    avatarInput
+    avatarInput,
+    cardTemplateSelector
 
 
 
@@ -57,7 +58,7 @@ import {
 import './pages/index.css';
 
 const api = new Api({
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-24',
+    adress: 'https://mesto.nomoreparties.co/v1/cohort-24',
     headers: {
         authorization: 'bc8d3de0-e753-4646-a5ba-26caab7d3e1d',
         'Content-Type': 'application/json'
@@ -93,6 +94,7 @@ const submitProfileForm = (event) => {
 const createCard = (item, templateSelector, handleCardClick) => {
     const card = new Card(item, templateSelector, handleCardClick);
     return card.getCard();
+
 }
 
 api.getInitialCards().then((cards) => {

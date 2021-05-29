@@ -1,9 +1,9 @@
 export default class Api {
-    constructor({ adress, token }) {
+    constructor({ adress, headers }) {
             this._adress = adress;
-            this._token = token;
+            this._headers = headers;
         }
-        // возьми сет карточек с сервака
+        // возьми сет карточек сервака
     getInitialCards() {
         return fetch(`${this._adress}/cards`, { headers: this._headers })
             .then(response => this._checkRequestResult(response))

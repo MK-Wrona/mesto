@@ -28,7 +28,8 @@ export default class Card {
 
     _getTemplate() {
         this._template = document.querySelector(this._cardTemplateSelector).content.querySelector('.grid__wrap').cloneNode(true);
-        //console.log(this._template);- возвращает темплейт
+        //this._template = document.querySelector(this._cardTemplateSelector).content.cloneNode(true);
+        console.log(this._template); //-  не возвращает темплейт
         return this._template;
     }
 
