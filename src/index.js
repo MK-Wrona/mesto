@@ -49,7 +49,9 @@ import {
     avatarPopupCloseBtn,
     avatarSubmitButton,
     avatarInput,
-    cardTemplateSelector
+    cardTemplateSelector,
+    cardSelector,
+
 
 
 
@@ -91,11 +93,11 @@ const submitProfileForm = (event) => {
 }
 
 
-const createCard = (item, templateSelector, handleCardClick) => {
-    const card = new Card(item, templateSelector, handleCardClick);
+const createCard = (item, gridTemplate, handleCardClick) => {
+    const card = new Card(item, gridTemplate, handleCardClick);
     return card.getCard();
-
 }
+
 
 api.getInitialCards().then((cards) => {
     generateInitialCard(cards)
@@ -104,8 +106,8 @@ const generateInitialCard = (cards) => {
     const initialSection = new Section({
         items: cards,
         renderer: (item) => {
-            const card = createCard(item);
-            initialSection.addItem(card.getCard());
+            const card = createCard(item, gridTemplate, handleCardClick);
+            initialSection.addItem(card);
         }
     }, list)
     initialSection.renderItems();
