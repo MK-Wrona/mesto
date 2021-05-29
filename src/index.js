@@ -55,10 +55,16 @@ import {
 } from "./script/utiles/constants.js"
 
 import './pages/index.css';
+
 const api = new Api({
-    adress: "https://mesto.nomoreparties.co/v1/cohort-24",
-    token: "bc8d3de0-e753-4646-a5ba-26caab7d3e1d"
-})
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-24',
+    headers: {
+        authorization: 'bc8d3de0-e753-4646-a5ba-26caab7d3e1d',
+        'Content-Type': 'application/json'
+    }
+});
+
+
 
 function addCard(card) {
     initialSection.addItem(card);
@@ -89,14 +95,19 @@ const createCard = (item, templateSelector, handleCardClick) => {
     return card.getCard();
 }
 
-const initialSection = new Section({
-    items: initialCards,
-    renderer: (item) => {
-        const card = createCard(item, '.grid-template', handleCardClick)
-        initialSection.addItem(card);
-    }
-}, list)
-initialSection.renderItems();
+api.getInitialCards().then((cards) => {
+    generateInitialCard(cards)
+})
+const generateInitialCard = (cards) => {
+    const initialSection = new Section({
+        items: cards,
+        renderer: (item) => {
+            const card = createCard(item);
+            initialSection.addItem(card.getCard());
+        }
+    }, list)
+    initialSection.renderItems();
+}
 
 const submitAddForm = () => {
     const card = createCard({ name: popUpImageTitleInput.value, link: popUpImageLinkInput.value }, '.grid-template', handleCardClick)

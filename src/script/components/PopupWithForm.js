@@ -12,12 +12,13 @@ export default class PopupWithForm extends Popup {
         this._form.querySelectorAll('.pop-up__input').forEach(item => {
             this._values[item.name] = item.value;
         });
+        return this._values;
     }
 
     setEventListeners() {
         super.setEventListeners()
         this._form.addEventListener('submit', (event) => {
-            this._submitHandler(event);
+            this._submitHandler(this._getInputValues());
         });
     }
 
