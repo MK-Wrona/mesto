@@ -1,8 +1,8 @@
 export default class Card {
-    constructor({ name, link }, gridTemplate, handleCardClick) {
+    constructor({ name, link }, cardTemplateSelector, handleCardClick) {
         this._text = name;
         this._link = link;
-        this._gridTemplate = gridTemplate;
+        this._cardTemplateSelector = cardTemplateSelector;
         this._handleCardClick = handleCardClick;
 
     }
@@ -27,7 +27,7 @@ export default class Card {
     }
 
     _getTemplate() {
-        this._template = document.querySelector(".grid-template").content.querySelector('.grid__wrap').cloneNode(true);
+        this._template = document.querySelector(this._cardTemplateSelector).content.querySelector('.grid__wrap').cloneNode(true);
         //this._template = document.querySelector(this._cardTemplateSelector).content.cloneNode(true);
         console.log(this._template); //-  не возвращает темплейт
         return this._template;

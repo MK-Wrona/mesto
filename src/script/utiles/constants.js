@@ -33,10 +33,12 @@ export const submitButtonAddPopUp = popUpAdd.querySelector('.pop-up__submit-butt
 export const profileSelectors = {
     profNameSelector: '.profile__name',
     profProfSelector: '.profile__prof',
+    profAvatarSelector: ".profile__icon"
 
 }
 export const profName = document.querySelector(profileSelectors.profNameSelector);
 export const profProf = document.querySelector(profileSelectors.profProfSelector);
+export const profAvatar = document.querySelector(profileSelectors.profAvatarSelector);
 
 export const commonPopUp = document.querySelector(".pop-up")
 export const escKeyCode = 27;
@@ -45,6 +47,7 @@ export const avatarIcon = document.querySelector(".profile__icon")
 export const avatarButton = document.querySelector(".profile__icon-container")
 export const avatarEditPopup = ".pop-up_avatar";
 export const avatarPopupForm = document.querySelector(".pop-up_avatar").querySelector(".pop-up__form")
-export const avatarPopupCloseBtn = ".pop-up__close-button";
+export const avatarPopupCloseBtn = document.querySelector(".pop-up_avatar").querySelector(".pop-up__close-button");
 export const avatarSubmitButton = document.querySelector(".pop-up_avatar").querySelector(".pop-up__submit-button")
 export const avatarInput = document.querySelector(".pop-up_avatar").querySelector(".pop-up__input-avatar")
+export const avatarCloseBtn = ".pop-up__close-button-avatar";
