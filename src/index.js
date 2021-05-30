@@ -51,6 +51,8 @@ import {
     avatarInput,
     cardTemplateSelector,
     cardSelector,
+    profName,
+    profProf
 
 
 
@@ -73,6 +75,13 @@ function addCard(card) {
     initialSection.addItem(card);
 
 }
+// взять данные пользователя с сервера
+api.getUserInfo().then((data => {
+    profName.textContent = data.name;
+    profProf.textContent = data.about;
+    avatarImage.src = data.avatar;
+}));
+
 
 const userInfo = new UserInfo(profileSelectors);
 popUpOpenButton.addEventListener('click', function() {
@@ -82,15 +91,20 @@ popUpOpenButton.addEventListener('click', function() {
     popUpUserProf.value = newInfo.profession;
 });
 
-const submitProfileForm = (event) => {
-    event.preventDefault();
+const submitProfileForm = (data) => {
+
     const info = {
         name: popUpUserName.value,
         profession: popUpUserProf.value
     }
-    userInfo.setUserInfo(info);
-    popupEditProfile.close();
+    api.editUserInfo(info.name, info.profession)
+        .finally(() => {
+            userInfo.setUserInfo(info);
+            popupEditProfile.close();
+        })
 }
+
+
 
 
 const createCard = (item, gridTemplate, handleCardClick) => {

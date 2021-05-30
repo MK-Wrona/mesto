@@ -35,6 +35,8 @@ export const profileSelectors = {
     profProfSelector: '.profile__prof',
 
 }
+export const profName = document.querySelector(profileSelectors.profNameSelector);
+export const profProf = document.querySelector(profileSelectors.profProfSelector);
 
 export const commonPopUp = document.querySelector(".pop-up")
 export const escKeyCode = 27;
