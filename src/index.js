@@ -169,15 +169,26 @@ addFormValidator.enableValidation();
 //редактирование аватара
 
 
-const popupEditAvatar = new PopupWithForm(avatarEditPopup, avatarPopupCloseBtn,
+const popupEditAvatar = new PopupWithConfirm(avatarEditPopup, avatarPopupCloseBtn,
     formEditAvatarSubmitHandler);
 popupEditAvatar.setEventListeners();
-const formEditAvatarSubmitHandler = (e) => {
-    e.preventDefault();
-    avatarIcon.src = popupAvatarInput.value;
-    popupEditAvatar.waitSubmitButton('Сохранение...');
-}
 avatarButton.addEventListener('click', function() {
     popupEditAvatar.open();
     popupEditAvatar.resetWaitSubmitButton();
 });
+const formEditAvatarSubmitHandler = (e) => {
+    e.preventDefault();
+    avatarIcon.src = popupAvatarInput.value;
+    popupEditAvatar.waitSubmitButton('Сохранение...');
+    popupEditAvatar.close();
+}
+
+//const formEditAvatarSubmitHandler = (e) => {
+//    e.preventDefault();
+//   avatarIcon.src = popupAvatarInput.value;
+//   popupEditAvatar.waitSubmitButton('Сохранение...');
+//}
+//avatarButton.addEventListener('click', function() {
+//  popupEditAvatar.open();
+//popupEditAvatar.resetWaitSubmitButton();
+//});
