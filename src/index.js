@@ -53,8 +53,7 @@ import {
     cardSelector,
     profName,
     profProf,
-    profAvatar,
-    avatarCloseBtn
+    profAvatar
 
 
 
@@ -81,10 +80,10 @@ function addCard(card) {
 api.getUserInfo().then((data => {
     profName.textContent = data.name;
     profProf.textContent = data.about;
-    profAvatar.src = data.avatar;
+    avatarIcon.src = data.avatar;
 }));
 
-//открыть модалку с данными юзера
+
 const userInfo = new UserInfo(profileSelectors);
 popUpOpenButton.addEventListener('click', function() {
     popupEditProfile.open();
@@ -92,38 +91,19 @@ popUpOpenButton.addEventListener('click', function() {
     popUpUserName.value = newInfo.name;
     popUpUserProf.value = newInfo.profession;
 });
-//переназначить значения
+
 const submitProfileForm = (data) => {
 
-        const info = {
-            name: popUpUserName.value,
-            profession: popUpUserProf.value
-        }
-        api.editUserInfo(info.name, info.profession)
-            .finally(() => {
-                userInfo.setUserInfo(info);
-                popupEditProfile.close();
-            })
+    const info = {
+        name: popUpUserName.value,
+        profession: popUpUserProf.value
     }
-    //открой модалку с авой юзера
-avatarButton.addEventListener('click', function() {
-    popupEditAvatar.open();
-    popupEditAvatar.resetWaitSubmitButton();
-});
-// изменение авы
-const formEditAvatarSubmitHandler = (e) => {
-        e.preventDefault();
-        avatarIcon.src = popupAvatarInput.value;
-        popupEditAvatar.waitSubmitButton('Сохранение...');
-        popupEditAvatar.close();
-    }
-    // объявление попапа авы
-
-const popupEditAvatar = new PopupWithConfirm(avatarEditPopup, avatarCloseBtn,
-    formEditAvatarSubmitHandler);
-popupEditAvatar.setEventListeners();
-
-
+    api.editUserInfo(info.name, info.profession)
+        .finally(() => {
+            userInfo.setUserInfo(info);
+            popupEditProfile.close();
+        })
+}
 
 
 
@@ -187,3 +167,17 @@ editFormValidator.enableValidation();
 const addFormValidator = new FormValidator(validityConfigSet, formAdd);
 addFormValidator.enableValidation();
 //редактирование аватара
+
+
+const popupEditAvatar = new PopupWithForm(avatarEditPopup, avatarPopupCloseBtn,
+    formEditAvatarSubmitHandler);
+popupEditAvatar.setEventListeners();
+const formEditAvatarSubmitHandler = (e) => {
+    e.preventDefault();
+    avatarIcon.src = popupAvatarInput.value;
+    popupEditAvatar.waitSubmitButton('Сохранение...');
+}
+avatarButton.addEventListener('click', function() {
+    popupEditAvatar.open();
+    popupEditAvatar.resetWaitSubmitButton();
+});

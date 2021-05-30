@@ -3,8 +3,6 @@ export default class Popup {
     constructor(popupSelector, closeButtonSelector) {
         this._popup = document.querySelector(popupSelector);
         this._closeButton = this._popup.querySelector(closeButtonSelector);
-        //this._popupForm = this._popup.querySelector('.pop-up__form');
-        //this._popupSubmitButton = this._popupForm.querySelector('.pop-up__submit-button');
 
         this._handlerEscClose = this._handlerEscClose.bind(this);
         this._handlerClickOverlay = this._handlerClickOverlay.bind(this); // можно через стрелочную
