@@ -1,55 +1,94 @@
 export default class Card {
-    constructor({ name, link }, gridTemplate, handleCardClick) {
-        this._text = name;
-        this._link = link;
+    constructor({ name, link, likes, owner }, userId, gridTemplate, { handleCardClick, likeCardHandler, deleteCardHandler }, cardId) {
+        this._titleCard = name;
+        this._linkCard = link;
         this._gridTemplate = gridTemplate;
+        this._cardId = cardId;
+        this._countLikes = likes;
+        this._userId = userId;
+        this._ownerId = owner._id;
+
+        // declare handlers
         this._handleCardClick = handleCardClick;
+        this._likeCardHandler = likeCardHandler;
+        this._deleteCardHandler = deleteCardHandler;
 
     }
-    _handlePreviewPicture() {
-        fullPopUpImage.src = this.src;
-        fullPopUpImage.alt = this.alt;
-        fullPopUpImageTitle.textContent = this.alt;
-    }
-
-    _handleLikeIcon() {
-        this.classList.toggle('grid__like-button_is-liked');
-    }
-
-
-
 
 
     _setEventListeners() {
-        this._likeButton.addEventListener('click', this._handleLikeIcon);
-        this._deleteIcon.addEventListener('click', this._handleDeleteCard);
-        this._image.addEventListener('click', () => this._handleCardClick(this._text, this._link));
+        this._image.addEventListener('click', () => {
+            this._handleCardClick(this._titleCard, this._linkCard);
+        })
+        this._deleteIcon.addEventListener('click', () => {
+            this._deleteCardHandler();
+        })
+        this._likeButton.addEventListener('click', () => {
+            this._likeCardHandler();
+        })
     }
 
-    _getTemplate() {
+    //!//
+
+    generateCard() {
         this._template = document.querySelector(".grid-template").content.querySelector('.grid__wrap').cloneNode(true);
         //this._template = document.querySelector(this._cardTemplateSelector).content.cloneNode(true);
-        console.log(this._template); //-  не возвращает темплейт
-        return this._template;
-    }
-
-    getCard() {
-        this._sight = this._getTemplate();
+        this._sight = this._template.cloneNode(true);
         this._likeButton = this._sight.querySelector('.grid__like-button');
         this._image = this._sight.querySelector('.grid__pic');
         this._deleteIcon = this._sight.querySelector('.grid__delete');
-        this._image.src = this._link;
-        this._image.alt = this._text;
-        this._sight.querySelector('.grid__description').textContent = this._text;
+        if (this._ownerId !== this._userId) {
+            this._deleteIcon.remove();
+        }
+        this._likes = this._sight.querySelector('.grid__like-counter');
+        // содержимое
+        this._image.src = this._linkCard;
+        this._image.alt = this._titleCard;
+        this._sight.querySelector('.grid__description').textContent = this._titleCard;
+        this.renderLikes();
+
         this._setEventListeners();
-        //console.log(this._sight); - возвращает темплейт
+
         return this._sight;
+    }
 
 
+    getIdCard() {
+        return this._cardId;
     }
-    _handleDeleteCard = () => {
-        this._sight.remove() //- undefined
+
+    // лайкнул ли юзер?
+    likedCard() {
+        return this._countLikes.some(like => {
+            return like._id === this._userId;
+        });
     }
+
+    // отрисовка
+    renderLikes() {
+        this._likes.textContent = this._countLikes.length;
+        this.showLikes(this._userId)
+    }
+
+    // тоггл лайк
+    showLikes() {
+        if (this.likedCard(this._userId)) {
+            this._likeButton.classList.add('grid__like-button_is-liked');
+        } else {
+            this._likeButton.classList.remove('grid__like-button_is-liked');
+        }
+    }
+
+
+    setLikes(listLikes) {
+        this._countLikes = listLikes;
+    }
+
+    // Удалить
+    deleteCard() {
+        this._deleteIcon.closest('.grid__wrap').remove();
+    }
+
 
 
 }

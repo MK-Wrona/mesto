@@ -38,6 +38,7 @@ export const profileSelectors = {
 }
 export const profName = document.querySelector(profileSelectors.profNameSelector);
 export const profProf = document.querySelector(profileSelectors.profProfSelector);
+export const profAvatar = document.querySelector(profileSelectors.avatarSelector);
 
 
 export const commonPopUp = document.querySelector(".pop-up")
@@ -49,4 +50,9 @@ export const avatarEditPopup = ".pop-up_avatar";
 export const avatarPopupForm = document.querySelector(".pop-up_avatar").querySelector(".pop-up__form")
 export const avatarPopupCloseBtn = ".pop-up__close-button";
 export const avatarSubmitButton = document.querySelector(".pop-up_avatar").querySelector(".pop-up__submit-button")
-export const avatarInput = document.querySelector(".pop-up_avatar").querySelector(".pop-up__input-avatar")
+export const avatarInput = ".pop-up__input-avatar"
+export const gridCardTemplateId = '#grid__template';
+export const popupConfirm = ".pop-up_confirm"
+export const popupAddCloseButtonSelector = '.pop-up__close-button';
+export const userId = "307d276272fffe89c94d80c7"
+export const popupConfirmSelector = document.querySelector(".pop-up_confirm")

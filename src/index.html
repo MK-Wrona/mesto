@@ -77,7 +77,7 @@
                     <input placeholder="Ссылка на картинку" type="url" id="input-link" class="pop-up__input pop-up__input_name_link" name="link" required>
                     <span class="pop-up__form-error" id="input-link-error"></span>
                 </div>
-                <button class="pop-up__submit-button" type="submit" value="Создать">Сохранить</button>
+                <button class="pop-up__submit-button" type="submit" value="Создать">Создать</button>
             </form>
             <button class="pop-up__close-button" type="button"></button>
         </div>
@@ -93,7 +93,9 @@
     <div class="pop-up pop-up_confirm">
         <div class="pop-up__window">
             <h3 class="pop-up__title-confirm">Вы уверены?</h3>
-            <button class="pop-up__submit-button" type="submit" value="Создать">Да</button>
+            <form class="pop-up__form" name="change-avatar" novalidate>
+                <button class="pop-up__submit-button" type="submit" value="Да">Да</button>
+            </form>
             <button type="button" class="pop-up__close-button"></button>
         </div>
     </div>
@@ -105,14 +107,14 @@
                 <label class="pop-up__form-label" for="input-link"></label>
                 <input placeholder="Ссылка на картинку" type="url" id="input-link" class="pop-up__input pop-up__input-avatar" name="link" required>
                 <span class="pop-up__form-error" id="input-link-error"></span>
-                <button class="pop-up__submit-button" type="submit" value="Создать">Сохранить</button>
+                <button class="pop-up__submit-button" type="submit" value="Сохранить">Сохранить</button>
             </form>
             <button type="button" class="pop-up__close-button"></button>
 
 
         </div>
     </div>
-    <template class="grid-template">
+    <template class="grid-template" id="grid__template">
       <div class="grid__wrap">
           <img src="./images/karach_grid.png" class="grid__pic" alt="" />
           <img src="<%=require('./images/trash-bin.svg')%>"  class="grid__delete" />

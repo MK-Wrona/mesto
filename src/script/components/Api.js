@@ -26,7 +26,7 @@ export default class Api {
             .catch(error => this._errorHandler(error));
     }
 
-    // Отредактировать данные пользователя
+    // Отредактировать данные
     editUserInfo(name, profession) {
         return fetch(`${this._adress}/users/me`, {
                 method: 'PATCH',
@@ -42,12 +42,57 @@ export default class Api {
 
     // добавь карточку на сервак
     plusCard(name, link) {
-        return fetch(`${this._adress}/cards`, {
-                method: 'POST',
+            return fetch(`${this._adress}/cards`, {
+                    method: 'POST',
+                    headers: this._headers,
+                    body: JSON.stringify({
+                        name: name,
+                        link: link
+                    })
+                })
+                .then(response => this._checkRequestResult(response))
+                .catch(error => this._errorHandler(error));
+        }
+        // Удали карточку
+    deleteCard(cardId) {
+        return fetch(`${this._adress}/cards/${cardId}`, {
+                method: 'DELETE',
+                headers: this._headers,
+            })
+            .then(response => this._checkRequestResult(response))
+            .catch(error => this._errorHandler(error));
+    }
+
+    // +лойс
+    likeCard(cardId) {
+        return fetch(`${this._adress}/cards/likes/${cardId}`, {
+                method: 'PUT',
+                headers: this._headers,
+            })
+            .then(response => this._checkRequestResult(response))
+            .catch(error => this._errorHandler(error));
+    }
+
+    // Удаление лайка карточке
+    unlikeCard(cardId) {
+        return fetch(`${this._adress}/cards/likes/${cardId}`, {
+                method: 'DELETE',
+                headers: this._headers,
+            })
+            .then(response => this._checkRequestResult(response))
+            .catch(error => this._errorHandler(error));
+    }
+
+
+
+    // редактировать аватар
+    editUserAvatar(urlAvatar) {
+        console.log(urlAvatar);
+        return fetch(`${this._adress}/users/me/avatar`, {
+                method: 'PATCH',
                 headers: this._headers,
                 body: JSON.stringify({
-                    name: name,
-                    link: link
+                    avatar: urlAvatar
                 })
             })
             .then(response => this._checkRequestResult(response))
