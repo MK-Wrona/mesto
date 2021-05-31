@@ -92,6 +92,7 @@ api.getUserInfo().then((data => {
 const userInfo = new UserInfo(profileSelectors);
 popUpOpenButton.addEventListener('click', function() {
     popupEditProfile.open();
+    popupEditProfile.resetWaitSubmitButton();
     const newInfo = userInfo.getUserInfo();
     popUpUserName.value = newInfo.name;
     popUpUserProf.value = newInfo.profession;
@@ -103,15 +104,17 @@ const submitProfileForm = (data) => {
             name: popUpUserName.value,
             profession: popUpUserProf.value
         }
+        popupEditProfile.waitSubmitButton('Сохранение...');
         api.editUserInfo(info.name, info.profession)
             .finally(() => {
                 userInfo.setUserInfo(info);
                 popupEditProfile.close();
+
             })
     }
     // добавление карточек
 const formSubmitAddHandler = (event) => {
-
+        popupAddCard.waitSubmitButton('Сохранение...');
         const titleCard = popUpImageTitleInput.value;
         const linkCard = popUpImageLinkInput.value;
         api.plusCard(titleCard, linkCard)
@@ -162,7 +165,7 @@ const generateInitialCards = (cards) => {
                 }
             }, item._id);
             const cardElement = card.generateCard();
-            defaultCardGrid.addItem(cardElement);
+            defaultCardGrid.appendItem(cardElement);
         }
     }, list);
     defaultCardGrid.renderItems();
@@ -222,7 +225,7 @@ popupAddCard.setEventListeners();
 
 popUpAddBtn.addEventListener("click", function() {
     popupAddCard.open();
-
+    popupAddCard.resetWaitSubmitButton();
 
 });
 
@@ -252,6 +255,7 @@ popupEditAvatar.setEventListeners();
 avatarButton.addEventListener('click', function() {
     popupEditAvatar.open();
     popupEditAvatar.resetWaitSubmitButton();
+
 });
 
 

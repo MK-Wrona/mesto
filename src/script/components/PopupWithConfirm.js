@@ -7,16 +7,16 @@ export default class PopupWithConfirm extends Popup {
         this.waitSubmitButton = this.waitSubmitButton.bind(this);
         this._popupForm = this._popup.querySelector('.pop-up__form');
         this._popupSubmitButton = this._popupForm.querySelector('.pop-up__submit-button');
-        this._defaultSubmitButtonText = this._popupSubmitButton.value;
+        this._defaultSubmitButtonText = this._popupSubmitButton.textContent;
         console.log(this._defaultSubmitButtonText)
     }
 
     waitSubmitButton(waitingText) {
-        this._popupSubmitButton.value = waitingText;
+        this._popupSubmitButton.textContent = waitingText;
     }
 
     resetWaitSubmitButton() {
-        this._popupSubmitButton.value = this._defaultSubmitButtonText;
+        this._popupSubmitButton.textContent = this._defaultSubmitButtonText;
     }
 
     setEventListeners() {

@@ -33,7 +33,7 @@ export const submitButtonAddPopUp = popUpAdd.querySelector('.pop-up__submit-butt
 export const profileSelectors = {
     profNameSelector: '.profile__name',
     profProfSelector: '.profile__prof',
-    avatarSelector: ".profile__icon"
+    avatarSelector: ".pop-up_avatar"
 
 }
 export const profName = document.querySelector(profileSelectors.profNameSelector);
