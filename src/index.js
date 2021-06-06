@@ -1,6 +1,5 @@
 import FormValidator from "./script/components/FormValidator.js";
 import { validityConfigSet } from "./script/utiles/validityConfigSet.js";
-import { initialCards } from "./script/utiles/initialCards.js"
 import Card from './script/components/Card.js';
 import Popup from "./script/components/Popup.js"
 import PopupWithImage from "./script/components/PopupWithImage.js"
@@ -57,11 +56,6 @@ import {
     gridCardTemplateId,
     popupConfirm,
     popupAddCloseButtonSelector,
-    userId,
-
-
-
-
 
 } from "./script/utiles/constants.js"
 
@@ -75,133 +69,100 @@ const api = new Api({
     }
 });
 
-
-
-function addCard(card) {
-    initialSection.addItem(card);
-
-}
-// взять данные пользователя с сервера
-api.getUserInfo().then((data => {
-    profName.textContent = data.name;
-    profProf.textContent = data.about;
-    avatarIcon.src = data.avatar;
-}));
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+    .then(values => {
+        const [userData, cardsData] = values;
+        userId = userData._id;
+        userInfo.setUserInfo({
+            name: userData.name,
+            profession: userData.about
+        });
+        avatarIcon.src = userData.avatar;
+        generateInitialCards(cardsData)
+    })
+    .catch(error => api._errorHandler(error));
 
 
 const userInfo = new UserInfo(profileSelectors);
 popUpOpenButton.addEventListener('click', function() {
     popupEditProfile.open();
-    popupEditProfile.resetWaitSubmitButton();
     const newInfo = userInfo.getUserInfo();
     popUpUserName.value = newInfo.name;
     popUpUserProf.value = newInfo.profession;
 });
 
+let info;
 const submitProfileForm = (data) => {
+    info = popupEditProfile.getInputValues();
+    popupEditProfile.waitSubmitButton('Сохранение...');
+    api.editUserInfo(info.name, info.prof)
+        .then(() => {
+            userInfo.setUserInfo({
+                name: info.name,
+                profession: info.prof
+            });
+            popupEditProfile.close();
+        })
+        .catch(error => api._errorHandler(error))
+        .finally(() => {
+            popupEditProfile.resetWaitSubmitButton();
 
-        const info = {
-            name: popUpUserName.value,
-            profession: popUpUserProf.value
+        })
+}
+let userId;
+let cardsList;
+
+function createCard(item) {
+    const card = new Card(item, userId, gridCardTemplateId, {
+        handleCardClick: (name, link) => {
+            popupWithImage.open(name, link);
+        },
+        likeCardHandler: () => {
+            const likedCard = card.likedCard();
+            const resultApi = likedCard ? api.unlikeCard(card.getIdCard()) : api.likeCard(card.getIdCard());
+
+            resultApi.then(data => {
+                card.setLikes(data.likes)
+                card.renderLikes();
+            });
+        },
+        deleteCardHandler: () => {
+            popupSubmitDel.open(card);
         }
-        popupEditProfile.waitSubmitButton('Сохранение...');
-        api.editUserInfo(info.name, info.profession)
-            .finally(() => {
-                userInfo.setUserInfo(info);
-                popupEditProfile.close();
-
-            })
+    }, item._id);
+    return card.generateCard();
+}
+//генерация начального сета карточек
+const generateInitialCards = (cards) => {
+        cardsList = new Section({
+            items: cards,
+            renderer: (item) => {
+                const card = createCard(item);
+                cardsList.appendItem(card);
+            }
+        }, list);
+        cardsList.renderItems();
     }
     // добавление карточек
-const formSubmitAddHandler = (event) => {
-        popupAddCard.waitSubmitButton('Сохранение...');
-        const titleCard = popUpImageTitleInput.value;
-        const linkCard = popUpImageLinkInput.value;
-        api.plusCard(titleCard, linkCard)
-            .then(dataCard => {
-                const card = new Card(dataCard, userId, gridCardTemplateId, {
-                    handleCardClick: (name, link) => {
-                        popupWithImage.open(name, link);
-                    },
-                    likeCardHandler: () => {
-                        const likedCard = card.likedCard();
-                        const resultApi = likedCard ? api.unlikeCard(card.getIdCard()) : api.likeCard(card.getIdCard());
+const formSubmitAddHandler = (data) => { //в добавлении слушателей в классе формы вызывается getInputValues для всех форм, оттуда берем
+    popupAddCard.waitSubmitButton('Сохранение...');
+    const titleCard = data.title; //чтение
+    const linkCard = data.link;
+    api.plusCard(titleCard, linkCard)
+        .then(dataCard => {
+            const card = createCard(dataCard);
+            cardsList.addItem(card);
+            card;
+        })
+        .catch(error => api._errorHandler(error))
+        .finally(() => {
+            popupAddCard.close();
 
-                        resultApi.then(data => {
-                            card.setLikes(data.likes)
-                            card.renderLikes();
-                        });
-                    },
-                    deleteCardHandler: () => {
-                        popupSubmitDel.open(card);
-                    }
-                }, dataCard._id);
-                const cardElement = card.generateCard();
-                list.prepend(cardElement);
-            });
+        })
 
-        popupAddCard.close();
-    }
-    //генерация начального сета карточек
-const generateInitialCards = (cards) => {
-    const defaultCardGrid = new Section({
-        items: cards,
-        renderer: (item) => {
-            const card = new Card(item, userId, gridCardTemplateId, {
-                handleCardClick: (name, link) => {
-                    popupWithImage.open(name, link);
-                },
-                likeCardHandler: () => {
-                    const likedCard = card.likedCard();
-                    const resultApi = likedCard ? api.unlikeCard(card.getIdCard()) : api.likeCard(card.getIdCard());
 
-                    resultApi.then(data => {
-                        card.setLikes(data.likes)
-                        card.renderLikes();
-                    });
-                },
-                deleteCardHandler: () => {
-                    popupSubmitDel.open(card);
-                }
-            }, item._id);
-            const cardElement = card.generateCard();
-            defaultCardGrid.appendItem(cardElement);
-        }
-    }, list);
-    defaultCardGrid.renderItems();
+
 }
-
-api.getInitialCards().then((cards) => {
-    generateInitialCards(cards);
-});
-
-
-
-
-
-//const generateInitialCard = (cards) => {
-//  const initialSection = new Section({
-//    items: cards,
-//  renderer: (item) => {
-//    const card = createCard(item, gridTemplate, handleCardClick);
-//  initialSection.addItem(card);
-//        }
-//    }, list)
-//  initialSection.renderItems();
-//}
-
-//const createCard = (item, gridTemplate, handleCardClick) => {
-//  const card = new Card(item, gridTemplate, handleCardClick);
-// return card.getCard();
-//}
-//
-//const submitAddForm = () => {
-//   const card = createCard({ name: popUpImageTitleInput.value, link: popUpImageLinkInput.value }, '.grid-template', handleCardClick)
-//   addCard(card);
-//   popupAddCard.close();
-//    formAdd.reset(); //сброс
-//   addFormValidator.deactivateButton(submitButtonAddPopUp, validityConfigSet.inactiveButtonClass) // дизейбл кнопки
-//}
 
 
 const popupWithImage = new PopupWithImage(fullPopUpSelector, popUpClsBtnSelector, fullPopUpImageSelector, fullPopUpTitleSelector);
@@ -234,21 +195,27 @@ editFormValidator.enableValidation();
 
 const addFormValidator = new FormValidator(validityConfigSet, formAdd);
 addFormValidator.enableValidation();
+
+const avatarFormValidator = new FormValidator(validityConfigSet, avatarPopupForm);
+avatarFormValidator.enableValidation();
 //редактирование аватара
 
-
-const formEditAvatarSubmitHandler = (event) => {
-    event.preventDefault();
-    const avatarLink = document.querySelector(avatarInput).value
+const formEditAvatarSubmitHandler = (data) => {
+    const avatarLink = popupEditAvatar.getInputValues().link;
     avatarIcon.src = avatarLink;
     popupEditAvatar.waitSubmitButton('Сохранение...');
     api.editUserAvatar(avatarLink)
-        .finally(() => {
+        .then(() => {
             popupEditAvatar.close();
-        });
+        })
+        .catch(error => api._errorHandler(error))
+        .finally(() => {
+            avatarPopupForm.reset();
+
+        })
 }
 
-const popupEditAvatar = new PopupWithConfirm(avatarEditPopup, popUpClsBtnSelector,
+const popupEditAvatar = new PopupWithForm(avatarEditPopup, popUpClsBtnSelector,
     formEditAvatarSubmitHandler);
 popupEditAvatar.setEventListeners();
 
@@ -258,15 +225,19 @@ avatarButton.addEventListener('click', function() {
 
 });
 
-
-const formDeleteSubmitHandler = (evt, card) => {
-    evt.preventDefault();
-
+const formDeleteSubmitHandler = (event, card) => {
+    event.preventDefault();
     popupSubmitDel.waitSubmitButton('Удаление...');
-    api.deleteCard(card._cardId)
-    card.deleteCard(); //  удалить карточку на клиенте
-    popupSubmitDel.close();
-    popupSubmitDel.resetWaitSubmitButton();
+    api.deleteCard(card.getIdCard())
+        .then(() => {
+            card.deleteCard();
+        })
+        .catch(error => api._errorHandler(error))
+        .finally(() => {
+            popupSubmitDel.close();
+            popupSubmitDel.resetWaitSubmitButton();
+
+        })
 }
 
 // модалка удаления
@@ -276,14 +247,3 @@ const popupSubmitDel = new PopupWithConfirm(popupConfirm, popUpClsBtnSelector,
     }
 )
 popupSubmitDel.setEventListeners();
-
-
-//const formEditAvatarSubmitHandler = (e) => {
-//    e.preventDefault();
-//   avatarIcon.src = popupAvatarInput.value;
-//   popupEditAvatar.waitSubmitButton('Сохранение...');
-//}
-//avatarButton.addEventListener('click', function() {
-//  popupEditAvatar.open();
-//popupEditAvatar.resetWaitSubmitButton();
-//});

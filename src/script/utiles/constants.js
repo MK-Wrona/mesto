@@ -47,12 +47,12 @@ export const escKeyCode = 27;
 export const avatarIcon = document.querySelector(".profile__icon")
 export const avatarButton = document.querySelector(".profile__icon-container")
 export const avatarEditPopup = ".pop-up_avatar";
-export const avatarPopupForm = document.querySelector(".pop-up_avatar").querySelector(".pop-up__form")
+export const avatarPopupForm = document.querySelector(".pop-up_avatar").querySelector(".pop-up__avatar-form")
 export const avatarPopupCloseBtn = ".pop-up__close-button";
 export const avatarSubmitButton = document.querySelector(".pop-up_avatar").querySelector(".pop-up__submit-button")
 export const avatarInput = ".pop-up__input-avatar"
 export const gridCardTemplateId = '#grid__template';
 export const popupConfirm = ".pop-up_confirm"
 export const popupAddCloseButtonSelector = '.pop-up__close-button';
-export const userId = "307d276272fffe89c94d80c7"
+
 export const popupConfirmSelector = document.querySelector(".pop-up_confirm")

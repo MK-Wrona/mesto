@@ -104,9 +104,11 @@
         <div class="pop-up__window">
             <h3 class="pop-up__title">Обновить аватар</h3>
             <form class="pop-up__form pop-up__avatar-form" name="change-avatar" novalidate>
-                <label class="pop-up__form-label" for="input-link"></label>
-                <input placeholder="Ссылка на картинку" type="url" id="input-link-avatar" class="pop-up__input pop-up__input-avatar" name="link" required>
-                <span class="pop-up__form-error" id="input-link-error-avatar"></span>
+                <div class="pop-up__input-box-avatar">
+                    <label class="pop-up__form-label" for="input-link"></label>
+                    <input placeholder="Ссылка на картинку" type="url" id="link-input-avatar" class="pop-up__input pop-up__input-avatar" name="link" required>
+                    <span class="pop-up__form-error" id="link-input-avatar-error"></span>
+                </div>
                 <button class="pop-up__submit-button" type="submit" value="Сохранить">Сохранить</button>
             </form>
             <button type="button" class="pop-up__close-button"></button>

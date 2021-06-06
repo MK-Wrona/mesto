@@ -1,8 +1,8 @@
 import { validityConfigSet } from "../utiles/validityConfigSet.js"
 export default class FormValidator {
-    constructor(validityConfigSet, formAdd) {
+    constructor(validityConfigSet, form) {
         this._settings = validityConfigSet;
-        this._form = formAdd;
+        this._form = form;
         this._inputList = Array.from(this._form.querySelectorAll(this._settings.inputSelector));
         this._buttonElement = this._form.querySelector(this._settings.submitButtonSelector);
     }
@@ -52,16 +52,22 @@ export default class FormValidator {
     }
 
     _setEventListeners() {
+        const inputList = Array.from(this._form.querySelectorAll(this._settings.inputSelector));
         this._form.addEventListener('submit', (event) => {
             event.preventDefault();
         });
-
-        this._toggleButtonState();
-        this._inputList.forEach((inputElement) => {
+        this._toggleButtonState(inputList, this._buttonElement);
+        inputList.forEach((inputElement) => {
             inputElement.addEventListener('input', () => {
                 this._checkInputValidity(inputElement);
-                this._toggleButtonState();
+                this._toggleButtonState(inputList, this._buttonElement);
             });
+        });
+        this._form.addEventListener('reset', () => {
+            this.deactivateButton(this._buttonElement);
+            inputList.forEach((inputElement) => {
+                this._hideInputError(inputElement);
+            })
         });
     };
 

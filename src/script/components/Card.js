@@ -7,6 +7,7 @@ export default class Card {
         this._countLikes = likes;
         this._userId = userId;
         this._ownerId = owner._id;
+        this._template = document.querySelector(this._gridTemplate).content.querySelector('.grid__wrap').cloneNode(true);
 
         // declare handlers
         this._handleCardClick = handleCardClick;
@@ -31,7 +32,6 @@ export default class Card {
     //!//
 
     generateCard() {
-        this._template = document.querySelector(".grid-template").content.querySelector('.grid__wrap').cloneNode(true);
         //this._template = document.querySelector(this._cardTemplateSelector).content.cloneNode(true);
         this._sight = this._template.cloneNode(true);
         this._likeButton = this._sight.querySelector('.grid__like-button');
@@ -86,7 +86,7 @@ export default class Card {
 
     // Удалить
     deleteCard() {
-        this._deleteIcon.closest('.grid__wrap').remove();
+        this._sight.remove()
     }
 
 

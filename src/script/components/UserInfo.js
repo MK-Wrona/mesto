@@ -15,6 +15,10 @@ export default class UserInfo {
 
     setUserInfo({ name, profession }) {
         this._userName.textContent = name;
-        this._userProfession.textContent = profession;
+        if (profession) { // будет false, если profession это null или undefined
+            this._userProfession.textContent = profession;
+        } else {
+            // ничего не изменится, останется старый вариант
+        }
     }
 }

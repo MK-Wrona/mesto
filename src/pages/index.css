@@ -46,3 +46,5 @@
 @import url(../blocks/grid/__like-counter.css/grid__like-counter.css);
 @import url(../blocks/profile/__icon-container/profile__icon-container.css);
 @import url(../blocks/profile/__icon-edit/profile__icon-edit.css);
+@import url(../blocks/pop-up/__input-box/pop-up__input-box-avatar.css);
+@import url(../blocks/pop-up/__form-error/pop-up__form-error-avatar.css);

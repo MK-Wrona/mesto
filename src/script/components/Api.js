@@ -6,8 +6,8 @@ export default class Api {
         // возьми сет карточек сервака
     getInitialCards() {
             return fetch(`${this._adress}/cards`, { headers: this._headers })
-                .then(response => this._checkRequestResult(response))
-                .catch(error => this._errorHandler(error));
+                .then(response => this._checkRequestResult(response));
+
         }
         // если что-то не так (все)
     _errorHandler(error) {
@@ -22,8 +22,7 @@ export default class Api {
         //получи данные пользователя с сервера
     getUserInfo() {
         return fetch(`${this._adress}/users/me`, { headers: this._headers })
-            .then(response => this._checkRequestResult(response))
-            .catch(error => this._errorHandler(error));
+            .then(response => this._checkRequestResult(response));
     }
 
     // Отредактировать данные
@@ -36,8 +35,7 @@ export default class Api {
                     about: profession
                 })
             })
-            .then(response => this._checkRequestResult(response))
-            .catch(error => this._errorHandler(error));
+            .then(response => this._checkRequestResult(response));
     }
 
     // добавь карточку на сервак
@@ -50,8 +48,7 @@ export default class Api {
                         link: link
                     })
                 })
-                .then(response => this._checkRequestResult(response))
-                .catch(error => this._errorHandler(error));
+                .then(response => this._checkRequestResult(response));
         }
         // Удали карточку
     deleteCard(cardId) {
@@ -59,8 +56,7 @@ export default class Api {
                 method: 'DELETE',
                 headers: this._headers,
             })
-            .then(response => this._checkRequestResult(response))
-            .catch(error => this._errorHandler(error));
+            .then(response => this._checkRequestResult(response));
     }
 
     // +лойс
@@ -69,8 +65,7 @@ export default class Api {
                 method: 'PUT',
                 headers: this._headers,
             })
-            .then(response => this._checkRequestResult(response))
-            .catch(error => this._errorHandler(error));
+            .then(response => this._checkRequestResult(response));
     }
 
     // Удаление лайка карточке
@@ -79,8 +74,7 @@ export default class Api {
                 method: 'DELETE',
                 headers: this._headers,
             })
-            .then(response => this._checkRequestResult(response))
-            .catch(error => this._errorHandler(error));
+            .then(response => this._checkRequestResult(response));
     }
 
 
@@ -96,7 +90,6 @@ export default class Api {
                 })
             })
             .then(response => this._checkRequestResult(response))
-            .catch(error => this._errorHandler(error));
     }
 
 }
