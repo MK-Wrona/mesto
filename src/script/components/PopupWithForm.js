@@ -35,9 +35,10 @@ export default class PopupWithForm extends Popup {
     }
 
     close() {
-        // очищение поля формы для след. добавления
         super.close()
-        this._form.reset()
+        this._form.reset() // очищение поля формы для след. добавления
+
+
     }
 
 

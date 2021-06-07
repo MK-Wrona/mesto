@@ -31,7 +31,7 @@ export default class Popup {
         this._popup.classList.remove('pop-up_opened');
         document.removeEventListener('keydown', this._handlerEscClose);
         document.removeEventListener('mousedown', this._handlerClickOverlay);
-        this._form.reset();
+
     }
 
     setEventListeners() {

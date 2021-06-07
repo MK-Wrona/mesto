@@ -9,54 +9,26 @@ import UserInfo from "./script/components/UserInfo.js"
 import PopupWithConfirm from "./script/components/PopupWithConfirm.js"
 import Api from "./script/components/Api.js"
 import {
-    profilePopUp,
     popUpOpenButton,
-    profilePopUpCloseButton,
-    popUpDefaultName,
-    popUpDefaultProf,
     profilePopUpForm,
     popUpUserName,
     popUpUserProf,
     fullPopUpSelector,
-    popUpAdd,
     popUpAddBtn,
-    popUpAddClsBtn,
-    commonPopUp,
     list,
     formAdd,
-    popUpImageTitleInput,
-    popUpImageLinkInput,
-    gridTemplate,
-    fullPopUp,
-    fullPopUpImage,
-    fullPopUpImageTitle,
-    fullPopUpClose,
-    submitButtonAddPopUp,
     profileSelectors,
     fullPopUpImageSelector,
     fullPopUpTitleSelector,
     popUpClsBtnSelector,
     profPopUpSelector,
     popUpAddSelector,
-    popUpOpenButtonSelector,
-    popUpAddBtnSelector,
-    gridTemplateSelector,
     avatarIcon,
     avatarButton,
     avatarEditPopup,
     avatarPopupForm,
-    avatarPopupCloseBtn,
-    avatarSubmitButton,
-    avatarInput,
-    cardTemplateSelector,
-    cardSelector,
-    profName,
-    profProf,
-    profAvatar,
     gridCardTemplateId,
-    popupConfirm,
-    popupAddCloseButtonSelector,
-
+    popupConfirm
 } from "./script/utiles/constants.js"
 
 import './pages/index.css';
@@ -75,7 +47,8 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
         userId = userData._id;
         userInfo.setUserInfo({
             name: userData.name,
-            profession: userData.about
+            profession: userData.about,
+            avatar: userData.src
         });
         avatarIcon.src = userData.avatar;
         generateInitialCards(cardsData)
@@ -89,17 +62,16 @@ popUpOpenButton.addEventListener('click', function() {
     const newInfo = userInfo.getUserInfo();
     popUpUserName.value = newInfo.name;
     popUpUserProf.value = newInfo.profession;
-});
 
-let info;
+
+});
 const submitProfileForm = (data) => {
-    info = popupEditProfile.getInputValues();
     popupEditProfile.waitSubmitButton('Сохранение...');
-    api.editUserInfo(info.name, info.prof)
+    api.editUserInfo(data.name, data.prof)
         .then(() => {
             userInfo.setUserInfo({
-                name: info.name,
-                profession: info.prof
+                name: data.name,
+                profession: data.prof
             });
             popupEditProfile.close();
         })
@@ -109,6 +81,7 @@ const submitProfileForm = (data) => {
 
         })
 }
+
 let userId;
 let cardsList;
 
@@ -122,9 +95,10 @@ function createCard(item) {
             const resultApi = likedCard ? api.unlikeCard(card.getIdCard()) : api.likeCard(card.getIdCard());
 
             resultApi.then(data => {
-                card.setLikes(data.likes)
-                card.renderLikes();
-            });
+                    card.setLikes(data.likes)
+                    card.renderLikes();
+                })
+                .catch(error => api._errorHandler(error))
         },
         deleteCardHandler: () => {
             popupSubmitDel.open(card);
@@ -153,17 +127,15 @@ const formSubmitAddHandler = (data) => { //в добавлении слушат�
             const card = createCard(dataCard);
             cardsList.addItem(card);
             card;
+            popupAddCard.close();
         })
         .catch(error => api._errorHandler(error))
         .finally(() => {
-            popupAddCard.close();
+            formAdd.reset();
 
         })
 
-
-
 }
-
 
 const popupWithImage = new PopupWithImage(fullPopUpSelector, popUpClsBtnSelector, fullPopUpImageSelector, fullPopUpTitleSelector);
 popupWithImage.setEventListeners();
@@ -201,15 +173,18 @@ avatarFormValidator.enableValidation();
 //редактирование аватара
 
 const formEditAvatarSubmitHandler = (data) => {
-    const avatarLink = popupEditAvatar.getInputValues().link;
-    avatarIcon.src = avatarLink;
+
     popupEditAvatar.waitSubmitButton('Сохранение...');
-    api.editUserAvatar(avatarLink)
+    api.editUserAvatar(data.link)
         .then(() => {
+            userInfo.setUserAvatar({
+                avatar: data.link
+            });
             popupEditAvatar.close();
         })
         .catch(error => api._errorHandler(error))
         .finally(() => {
+
             avatarPopupForm.reset();
 
         })
@@ -231,10 +206,10 @@ const formDeleteSubmitHandler = (event, card) => {
     api.deleteCard(card.getIdCard())
         .then(() => {
             card.deleteCard();
+            popupSubmitDel.close();
         })
         .catch(error => api._errorHandler(error))
         .finally(() => {
-            popupSubmitDel.close();
             popupSubmitDel.resetWaitSubmitButton();
 
         })

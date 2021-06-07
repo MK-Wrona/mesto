@@ -1,24 +1,35 @@
 export default class UserInfo {
-    constructor({ profNameSelector, profProfSelector }) {
+    constructor({ profNameSelector, profProfSelector, avatarSelector }) {
         this._userName = document.querySelector(profNameSelector);
         this._userProfession = document.querySelector(profProfSelector);
+        this._userAvatar = document.querySelector(avatarSelector)
     }
 
     getUserInfo() {
         const userSet = {
             name: this._userName.textContent,
-            profession: this._userProfession.textContent
+            profession: this._userProfession.textContent,
+            avatar: this._userAvatar.src
         }
 
         return userSet;
     }
 
     setUserInfo({ name, profession }) {
-        this._userName.textContent = name;
-        if (profession) { // будет false, если profession это null или undefined
+        if (name) {
+            this._userName.textContent = name;
+        }
+        if (profession) {
             this._userProfession.textContent = profession;
         } else {
-            // ничего не изменится, останется старый вариант
+            //  останется старый вариант
+        }
+    }
+    setUserAvatar({ avatar }) {
+        if (avatar) {
+            this._userAvatar.src = avatar;
+        } else {
+
         }
     }
 }

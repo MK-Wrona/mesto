@@ -9,6 +9,7 @@ export const popUpDefaultProf = document.querySelector(".profile__prof");
 export const profilePopUpForm = document.querySelector(".pop-up__form");
 export const popUpUserName = document.querySelector(".pop-up__input_name_name");
 export const popUpUserProf = document.querySelector(".pop-up__input_name_prof");
+export const popUpUserAvatar = document.querySelector(".pop-up__input-avatar");
 // переменные второй модалки - добавления
 export const popUpAdd = document.querySelector(".pop-up_add");
 export const popUpAddSelector = ".pop-up_add";
@@ -33,7 +34,7 @@ export const submitButtonAddPopUp = popUpAdd.querySelector('.pop-up__submit-butt
 export const profileSelectors = {
     profNameSelector: '.profile__name',
     profProfSelector: '.profile__prof',
-    avatarSelector: ".pop-up_avatar"
+    avatarSelector: ".profile__icon"
 
 }
 export const profName = document.querySelector(profileSelectors.profNameSelector);
